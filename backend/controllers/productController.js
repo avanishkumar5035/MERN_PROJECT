@@ -22,12 +22,21 @@ exports.createProduct = async(req,res,next) =>{
 // Get All Product
 exports.getAllProducts = async (req,res)=>{
 
-    const product = await Product.find();
+    const products = await Product.find();
 
     res.status(200).json({
         success:true,
-        product,
+        products,
     });
+}
+
+// Get Product Details
+
+exports.getProductDetails = async(req,res,next)=>{
+    const product = await Product.findById(req.params.id);
+
+
+
 }
 
 // Update Product -- Admin
@@ -67,15 +76,16 @@ exports.getAllProducts = async (req,res)=>{
 //             message:"Product not found",
 //         });
 //     }
-//     await products.remove();
+//     await product.remove();
 
 //     res.status(200).json({
 //         success:true,
-//         message:"Product Delete Successfully"
-//     })
+//         message:"Product delete Successfully"
+//     });
 // }
 
-exports.deleteProduct = async (req, res) => {
+
+exports.deleteProduct = async (req, res,next) => {
   try {
     const product = await Product.findById(req.params.id);
 
@@ -86,7 +96,7 @@ exports.deleteProduct = async (req, res) => {
       });
     }
 
-    await product.deleteOne();
+    await product.remove();
 
     res.status(200).json({
       success: true,

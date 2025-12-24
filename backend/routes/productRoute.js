@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllProducts, updateProduct, deleteProduct } = require("../controllers/productController");
+const { getAllProducts, updateProduct, deleteProduct, getProductDetails } = require("../controllers/productController");
 
 
 const { createProduct } = require("../controllers/productController");
@@ -11,10 +11,7 @@ router.post("/product/new", createProduct);
 
 // router.route("/product/new").post(createProduct);
 
-router.route("/product/:id").put(updateProduct);
-
-router.delete("/product/:id", deleteProduct);
-
+router.route("/product/:id").put(updateProduct).delete(deleteProduct).get(getProductDetails);
 
 
 
