@@ -13,11 +13,27 @@ class ApiFeatures {
             }
         }:{}
 
-        console.log(keyword);
-
         this.query = this.query.find({...keyword});
         return this;
 
+    }
+
+    filter(){
+        const queryCopy = {...this.queryStr}
+
+        // Remove some fields for some category
+
+        const removeFields = ["keyword","page","limit"];
+
+        removeFields.forEach(key=>delete queryCopy[key]);
+
+        // filter for Price and Rating
+
+        console.log(queryCopy);
+
+
+        this.query = this.query.find(queryCopy);
+        return this;
     }
 };
 
