@@ -66,5 +66,37 @@ exports.logout = catchAsyncErrors(async(req,res,next)=>{
     res.status(200).json({
         success: true,
         message: "Logged Out"
-    })
-})
+    });
+});
+
+
+// Forgot Password
+
+exports.forgotPassword = catchAsyncErrors(async(req,res,next)=>{
+    const user = await User.findOne({email:req.body.email});
+
+    if(!user){
+        return next(new ErrorHander("User not Found", 404));
+    }
+
+    // Get ResetPassword token
+    const resetToken = user.getResetPasswordToken();
+
+    await user.save({validateBeforeSave: false});
+
+
+    const resetPasswordUrl = `${req.protocal}://${req.get("host")}/api/v1/password/reset/${resetToken}`;
+
+    const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it`;
+
+    try {
+        
+    } catch (error) {
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+
+        await user.save({validateBeforeSave: false});
+
+        return next(new ErrorHander(error.message, 500)); 
+    }
+});
