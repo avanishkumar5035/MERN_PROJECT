@@ -17,7 +17,7 @@ exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
 
     if (!token) {
         return next(
-            new ErrorHander("Please login to access this resource", 401)
+            new ErrorHander("Please login to access this ", 401)
         );
     }
 
