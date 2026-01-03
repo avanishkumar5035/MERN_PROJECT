@@ -8,19 +8,19 @@ const userSchema = new mongoose.Schema({
 
     name:{
         type:String,
-        require:[true, "Please Enter Your Name"],
+        required:[true, "Please Enter Your Name"],
         maxLength:[30, "Name cannot exceed 30 characters"],
         minLenght:[4, " Name should have more than 4 characters"],
     },
     email:{
         type:String,
-        require:[true, "Please Enter Your Email"],
+        required:[true, "Please Enter Your Email"],
         unique:true,
         validate:[validator.isEmail, "Please Enter the valid Email"],
     },
     password:{
         type:String,
-        require:[true, "Please Enter Your Password"],
+        required:[true, "Please Enter Your Password"],
         minLenght:[8, " Password should be have Greater than 8 characters"],
         select:false,
     },
@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema({
 userSchema.pre("save", async function(next){
 
     if(!this.isModified("password")){
-        next();
+        return next();
     }
 
     this.password = await bcrypt.hash(this.password,10);
@@ -72,7 +72,7 @@ userSchema.methods.comparePassword = async function(enteredPassword){
 
 //Generating Password Reset Token 
 
-userSchema.methods.gerResetPassworToken = function(){
+userSchema.methods.getResetPasswordToken = function(){
 
     // Generating token 
     const resetToken = crypto.randomBytes(20).toString("hex");
