@@ -112,3 +112,5 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHander(error.message, 500)); 
     }
 });
+
+
