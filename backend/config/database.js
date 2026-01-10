@@ -1,4 +1,4 @@
-console.log("Connected DB URI =", process.env.DB_URI);
+console.log("Connected DB_URI =", process.env.DB_URI);
 
 const mongoose = require("mongoose");
 
